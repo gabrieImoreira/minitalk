@@ -6,12 +6,13 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:06:45 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/20 22:30:23 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/20 22:56:25 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <stdio.h>
+#include <unistd.h>
 
 int	ft_atoi(const char *nptr)
 {
@@ -37,8 +38,16 @@ int	ft_atoi(const char *nptr)
 	return (n * j);
 }
 
+void send_message(int pid, char *message)
+{
+	kill(pid, SIGUSR1);
+	printf("message: %s\n", message);
+}
+
 int main(int argc, char **argv)
 {
-	printf("test client: %s\n", argv[1]);
-	kill(ft_atoi(argv[1]), SIGUSR1);
+	if (argc == 3)
+		send_message(ft_atoi(argv[1]), argv[2]);
+	else
+		write(1, "Errors at the parameters\n", 25);
 }

@@ -6,15 +6,12 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 23:07:38 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/20 22:16:38 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/20 22:55:18 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
-#include <sys/types.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
 #include <unistd.h>
 
 void my_handler(int signum)
