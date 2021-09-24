@@ -6,13 +6,14 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:06:45 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/20 22:56:25 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/23 21:43:25 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 int	ft_atoi(const char *nptr)
 {
@@ -38,13 +39,43 @@ int	ft_atoi(const char *nptr)
 	return (n * j);
 }
 
-void send_message(int pid, char *message)
+void	send_signal(char chr, int len, int pid)
 {
-	kill(pid, SIGUSR1);
-	printf("message: %s\n", message);
+	while (--len >= 0)
+	{
+		if ((chr % 2) == 1)
+		{
+			printf("1\n");
+			if (kill(pid, SIGUSR1) == -1)
+			{
+				write(1, "Error signal!\n", 15);
+				exit(0);
+			}
+		}
+		else
+		{
+			printf("0\n");
+			if (kill(pid, SIGUSR2) == -1)
+			{
+				write(1, "Error signal!\n", 15);
+				exit(0);
+			}
+		}
+		usleep(100);
+		chr /= 2;
+	}
 }
 
-int main(int argc, char **argv)
+void	send_message(int pid, char *message)
+{
+	int	i;
+
+	i = -1;
+	while (message[++i] != '\0')
+		send_signal(message[i], 8, pid);
+}
+
+int	main(int argc, char **argv)
 {
 	if (argc == 3)
 		send_message(ft_atoi(argv[1]), argv[2]);
