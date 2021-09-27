@@ -6,7 +6,7 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:06:45 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/23 21:43:25 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/23 21:55:46 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	send_signal(char chr, int len, int pid)
 	{
 		if ((chr % 2) == 1)
 		{
-			printf("1\n");
+			printf("1");
 			if (kill(pid, SIGUSR1) == -1)
 			{
 				write(1, "Error signal!\n", 15);
@@ -54,7 +54,7 @@ void	send_signal(char chr, int len, int pid)
 		}
 		else
 		{
-			printf("0\n");
+			printf("0");
 			if (kill(pid, SIGUSR2) == -1)
 			{
 				write(1, "Error signal!\n", 15);
@@ -64,6 +64,7 @@ void	send_signal(char chr, int len, int pid)
 		usleep(100);
 		chr /= 2;
 	}
+	printf("\n\n");
 }
 
 void	send_message(int pid, char *message)

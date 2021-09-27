@@ -6,34 +6,38 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 21:44:34 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/23 21:46:31 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/26 21:45:23 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
+# include <stdio.h>
+# include <signal.h>
+# include <unistd.h>
+# include <stdlib.h>
 
-void	my_handler(int signum)
+void	handler(int signum)
 {
 	if (signum == SIGUSR1)
 	{
-		printf("1\n");
+		write(1, "1", 1);
 	}
 	if (signum == SIGUSR2)
 	{
-		printf("0\n");
+		write(1, "0", 1);
 	}
 }
 
-int	main(int argc, char *argv[])
+int	main(void)
 {
 	int	pid;
-
-	signal(SIGUSR1, my_handler);
-	signal(SIGUSR2, my_handler);
+	struct sigaction sa_signal;
+	
+	sa_signal.sa_flags = 0;
+	sa_signal.sa_handler = &handler;
+	sigaction(SIGUSR1, &sa_signal, NULL);
+	sigaction(SIGUSR2, &sa_signal, NULL);
 	printf("PID: %d\n", getpid());
 	while (1)
-		sleep(3);
+		sleep(100);
 	return (0);
 }
