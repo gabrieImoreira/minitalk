@@ -6,46 +6,18 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:06:45 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/23 21:55:46 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:18:03 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "minitalk.h"
 
-int	ft_atoi(const char *nptr)
-{
-	int	j;
-	int	n;
-
-	j = 1;
-	n = 0;
-	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n'
-		|| *nptr == '\v' || *nptr == '\f' || *nptr == '\r')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-	{
-		if (*nptr == '-')
-			j *= -1;
-		nptr++;
-	}
-	while (*nptr > 47 && *nptr < 58)
-	{
-		n = (*nptr - '0') + (n * 10);
-		nptr++;
-	}
-	return (n * j);
-}
-
-void	send_signal(char chr, int len, int pid)
+void	send_signal(unsigned char chr, int len, int pid)
 {
 	while (--len >= 0)
 	{
-		if ((chr % 2) == 1)
+		if ((chr % 2) == 0)
 		{
-			printf("1");
 			if (kill(pid, SIGUSR1) == -1)
 			{
 				write(1, "Error signal!\n", 15);
@@ -54,7 +26,6 @@ void	send_signal(char chr, int len, int pid)
 		}
 		else
 		{
-			printf("0");
 			if (kill(pid, SIGUSR2) == -1)
 			{
 				write(1, "Error signal!\n", 15);
@@ -64,7 +35,6 @@ void	send_signal(char chr, int len, int pid)
 		usleep(100);
 		chr /= 2;
 	}
-	printf("\n\n");
 }
 
 void	send_message(int pid, char *message)

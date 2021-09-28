@@ -6,37 +6,41 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 21:44:34 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/26 21:45:23 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:43:54 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stdio.h>
-# include <signal.h>
-# include <unistd.h>
-# include <stdlib.h>
+#include "minitalk.h"
 
-void	handler(int signum)
+void	handler(int sig)
 {
-	if (signum == SIGUSR1)
+	static unsigned int	i;
+	static unsigned int	chr;
+
+	if (i > 7)
 	{
-		write(1, "1", 1);
+		i = 0;
+		chr = 0;
 	}
-	if (signum == SIGUSR2)
-	{
-		write(1, "0", 1);
-	}
+	if (sig == SIGUSR2)
+		chr += 1 << i;
+	i++;
+	if (i == 8)
+		write(1, &chr, 1);	
 }
 
 int	main(void)
 {
-	int	pid;
-	struct sigaction sa_signal;
-	
+	char					*pid;
+	struct sigaction	sa_signal;
+
 	sa_signal.sa_flags = 0;
 	sa_signal.sa_handler = &handler;
 	sigaction(SIGUSR1, &sa_signal, NULL);
 	sigaction(SIGUSR2, &sa_signal, NULL);
-	printf("PID: %d\n", getpid());
+	ft_putstr_fd("PID: ", 1);
+	ft_putnbr_fd(getpid(), 1);
+	ft_putstr_fd("\n", 1);
 	while (1)
 		sleep(100);
 	return (0);
