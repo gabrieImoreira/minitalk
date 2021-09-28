@@ -6,7 +6,7 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:06:45 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/27 21:18:03 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/27 22:09:28 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,18 @@ void	send_message(int pid, char *message)
 	int	i;
 
 	i = -1;
-	while (message[++i] != '\0')
+	while (message[++i])
 		send_signal(message[i], 8, pid);
 }
 
 int	main(int argc, char **argv)
 {
+	pid_t pid;
+	
+	pid = ft_atoi(argv[1]);
 	if (argc == 3)
-		send_message(ft_atoi(argv[1]), argv[2]);
+		send_message(pid, argv[2]);
 	else
 		write(1, "Errors at the parameters\n", 25);
+	send_signal('\0', 8, pid);
 }

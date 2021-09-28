@@ -6,7 +6,7 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 21:44:34 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/27 21:43:54 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:58:16 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ void	handler(int sig)
 		chr += 1 << i;
 	i++;
 	if (i == 8)
-		write(1, &chr, 1);	
+	{
+		if(chr == 0)
+			write(1, "\n", 1);
+		else
+			write(1, &chr, 1);
+	}
 }
 
 int	main(void)
