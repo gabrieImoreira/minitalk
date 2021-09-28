@@ -6,7 +6,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-int		ft_atoi(const char *nptr);
+int		get_num(const char *str);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 

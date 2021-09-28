@@ -6,17 +6,19 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 21:44:34 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/27 21:58:16 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/28 19:59:49 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
 
-void	handler(int sig)
+#include "../inc/minitalk.h"
+
+void	handler(int sig, siginfo_t *sa, void *context)
 {
 	static unsigned int	i;
 	static unsigned int	chr;
 
+	(void)context;
 	if (i > 7)
 	{
 		i = 0;
@@ -28,7 +30,10 @@ void	handler(int sig)
 	if (i == 8)
 	{
 		if(chr == 0)
+		{
 			write(1, "\n", 1);
+			kill(sa->si_pid, SIGUSR1);
+		}
 		else
 			write(1, &chr, 1);
 	}
@@ -37,16 +42,16 @@ void	handler(int sig)
 int	main(void)
 {
 	char					*pid;
-	struct sigaction	sa_signal;
+	struct sigaction	sa;
 
-	sa_signal.sa_flags = 0;
-	sa_signal.sa_handler = &handler;
-	sigaction(SIGUSR1, &sa_signal, NULL);
-	sigaction(SIGUSR2, &sa_signal, NULL);
+	sa.sa_flags = SA_SIGINFO;
+	sa.sa_sigaction = &handler;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	ft_putstr_fd("PID: ", 1);
 	ft_putnbr_fd(getpid(), 1);
 	ft_putstr_fd("\n", 1);
 	while (1)
-		sleep(100);
+		pause();
 	return (0);
 }

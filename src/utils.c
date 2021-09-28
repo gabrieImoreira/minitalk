@@ -6,11 +6,11 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 21:18:09 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/27 21:49:12 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/28 19:59:43 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../inc/minitalk.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -26,28 +26,22 @@ static int	ft_putchar(char c)
 	return (1);
 }
 
-int	ft_atoi(const char *nptr)
+int	get_num(const char *str)
 {
-	int	j;
 	int	n;
+	int i;
 
-	j = 1;
 	n = 0;
-	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n'
-		|| *nptr == '\v' || *nptr == '\f' || *nptr == '\r')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
+	i = 0;
+	while (str[i])
 	{
-		if (*nptr == '-')
-			j *= -1;
-		nptr++;
+		if (str[i] >= '0' && str[i] <= '9')
+			n = (n * 10) + (str[i] - '0');
+		else
+			return (0);
+		i++;
 	}
-	while (*nptr > 47 && *nptr < 58)
-	{
-		n = (*nptr - '0') + (n * 10);
-		nptr++;
-	}
-	return (n * j);
+	return (n);
 }
 
 void	ft_putnbr_fd(int n, int fd)
