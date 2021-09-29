@@ -6,7 +6,7 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:06:45 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/28 21:05:01 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/28 21:13:29 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	send_signal(unsigned char chr, int len, int pid)
 		{
 			if (kill(pid, SIGUSR1) == -1)
 			{
-				write(1, "Error signal!\n", 15);
+				write(1, "Invalid PID!\n", 15);
 				exit(0);
 			}
 		}
@@ -28,7 +28,7 @@ static void	send_signal(unsigned char chr, int len, int pid)
 		{
 			if (kill(pid, SIGUSR2) == -1)
 			{
-				write(1, "Error signal!\n", 15);
+				write(1, "Invalid PID!\n", 15);
 				exit(0);
 			}
 		}
@@ -60,8 +60,11 @@ int	main(int argc, char *argv[])
 	pid_t	pid;
 
 	pid = get_num(argv[1]);
-	if (argc != 3)
+	if (argc != 3 || !pid)
+	{
 		ft_putstr_fd("Invalid parameters\n", 1);
+		exit(0);
+	}
 	else
 		send_message(pid, argv[2]);
 	signal(SIGUSR1, handle);
