@@ -6,7 +6,7 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 21:44:34 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/28 21:50:44 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/28 22:03:51 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	handler(int sig, siginfo_t *sa, void *context)
 	}
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	struct sigaction	sa;
 
@@ -46,6 +46,8 @@ int	main(void)
 	sa.sa_sigaction = &handler;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
+	if (argc > 1 || !argv)
+		return (ft_putstr_fd("Parameters aren't allowed\n", 1));
 	ft_putstr_fd("PID: ", 1);
 	ft_putnbr_fd(getpid(), 1);
 	ft_putstr_fd("\n", 1);

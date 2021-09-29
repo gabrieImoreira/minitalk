@@ -6,18 +6,19 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 21:18:09 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/28 21:06:02 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/28 22:04:33 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
 	if (!s)
-		return ;
+		return (0);
 	while (*s)
 		write(fd, s++, 1);
+	return (0);
 }
 
 static int	ft_putchar(char c)
