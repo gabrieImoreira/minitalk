@@ -6,14 +6,13 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 21:44:34 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/28 19:59:49 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/28 21:05:39 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../inc/minitalk.h"
 
-void	handler(int sig, siginfo_t *sa, void *context)
+static void	handler(int sig, siginfo_t *sa, void *context)
 {
 	static unsigned int	i;
 	static unsigned int	chr;
@@ -29,7 +28,7 @@ void	handler(int sig, siginfo_t *sa, void *context)
 	i++;
 	if (i == 8)
 	{
-		if(chr == 0)
+		if (chr == 0)
 		{
 			write(1, "\n", 1);
 			kill(sa->si_pid, SIGUSR1);
@@ -41,7 +40,6 @@ void	handler(int sig, siginfo_t *sa, void *context)
 
 int	main(void)
 {
-	char					*pid;
 	struct sigaction	sa;
 
 	sa.sa_flags = SA_SIGINFO;

@@ -6,13 +6,13 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:06:45 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/28 19:59:39 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/28 21:05:01 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
-void	send_signal(unsigned char chr, int len, int pid)
+static void	send_signal(unsigned char chr, int len, int pid)
 {
 	while (--len >= 0)
 	{
@@ -37,7 +37,7 @@ void	send_signal(unsigned char chr, int len, int pid)
 	}
 }
 
-void	send_message(int pid, char *message)
+static void	send_message(int pid, char *message)
 {
 	int	i;
 
@@ -46,9 +46,9 @@ void	send_message(int pid, char *message)
 		send_signal(message[i], 8, pid);
 }
 
-static void handle(int sig)
+static void	handle(int sig)
 {
-	if(sig == SIGUSR1)
+	if (sig == SIGUSR1)
 	{
 		write(1, "Message received by Server!\n", 28);
 		exit(0);
@@ -57,8 +57,8 @@ static void handle(int sig)
 
 int	main(int argc, char *argv[])
 {
-	pid_t pid;
-	
+	pid_t	pid;
+
 	pid = get_num(argv[1]);
 	if (argc != 3)
 		ft_putstr_fd("Invalid parameters\n", 1);
