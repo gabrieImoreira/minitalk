@@ -6,7 +6,7 @@
 /*   By: gantonio <gantonio@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:06:45 by gantonio          #+#    #+#             */
-/*   Updated: 2021/09/28 21:13:29 by gantonio         ###   ########.fr       */
+/*   Updated: 2021/09/28 21:42:29 by gantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	send_signal(unsigned char chr, int len, int pid)
 				exit(0);
 			}
 		}
-		usleep(500);
+		usleep(100);
 		chr /= 2;
 	}
 }
